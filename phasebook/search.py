@@ -25,6 +25,22 @@ def search_users(args):
         a list of users that match the search parameters
     """
 
-    # Implement search here!
+    id_results = []
+    name_results = []
+    age_results = []
+    occupation_results = []
 
-    return USERS
+    for user in USERS:
+        if 'id' in args and user['id'] == args['id']:
+            id_results.append(user)
+        if 'name' in args and args['name'].lower() in user['name'].lower():
+            name_results.append(user)
+        if 'age' in args and int(args['age']) - 1 <= user['age'] <= int(args['age']) + 1:
+            age_results.append(user)
+        if 'occupation' in args and args['occupation'].lower() in user['occupation'].lower():
+            occupation_results.append(user)
+
+    results = id_results + name_results + age_results + occupation_results
+    results = list({v['id']:v for v in results}.values())
+
+    return results
